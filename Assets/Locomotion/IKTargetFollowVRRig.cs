@@ -18,7 +18,7 @@ public class VRMap
 public class IKTargetFollowVRRig : MonoBehaviour
 {
     public float turnSmoothness = 0.1f;
-    public VRMap head;
+    // public VRMap head;
     public VRMap leftHand;
     public VRMap rightHand;
 
@@ -28,16 +28,17 @@ public class IKTargetFollowVRRig : MonoBehaviour
     private void LateUpdate()
     {
         // move the body according to headset's position and rotation
-        transform.position = head.ikTarget.position + headBodyPositionOffset;
-        float yaw = head.vrTarget.eulerAngles.y;
-        transform.rotation = Quaternion.Lerp(
-            transform.rotation, 
-            Quaternion.Euler(transform.eulerAngles.x, yaw, transform.eulerAngles.z), 
-            turnSmoothness
-        );
-
-        // update IK targets
-        head.Map();
+        // transform.position = head.ikTarget.position + headBodyPositionOffset;
+        // float yaw = head.vrTarget.eulerAngles.y;
+        // transform.rotation = Quaternion.Lerp(
+        //     transform.rotation, 
+        //     Quaternion.Euler(transform.eulerAngles.x, yaw, transform.eulerAngles.z), 
+        //     turnSmoothness
+        // );
+        //
+        // // update IK targets
+        // head.Map();
+        
         leftHand.Map();
         rightHand.Map();
     }
