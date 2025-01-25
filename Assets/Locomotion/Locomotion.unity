@@ -188,7 +188,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 130824589}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -457,14 +457,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 316269136}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.9998256, z: -0, w: 0.018674428}
-  m_LocalPosition: {x: 0.016, y: 1.14, z: -0.344}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.0083145695, y: 0.7941452, z: -0.606936, w: 0.029881163}
+  m_LocalPosition: {x: 0.011149086, y: 0.69101316, z: 0.25546002}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1394279484}
   m_Father: {fileID: 1024490425}
-  m_LocalEulerAnglesHint: {x: 0, y: 177.86, z: 0}
+  m_LocalEulerAnglesHint: {x: 74.685, y: 171.867, z: -5.01}
 --- !u!114 &316269138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -482,12 +482,12 @@ MonoBehaviour:
     vrTarget: {fileID: 855693639}
     ikTarget: {fileID: 398295344}
     trackingPositionOffset: {x: 0, y: 0, z: 0}
-    trackingRotationOffset: {x: 0, y: 0, z: 0}
+    trackingRotationOffset: {x: 175.6, y: -50.3, z: 0}
   rightHand:
     vrTarget: {fileID: 477440199}
     ikTarget: {fileID: 1861308858}
     trackingPositionOffset: {x: 0, y: 0, z: 0}
-    trackingRotationOffset: {x: 0, y: 0, z: 0}
+    trackingRotationOffset: {x: -4.2, y: -139.7, z: 0}
   headBodyPositionOffset: {x: 0, y: 0, z: 0}
   headBodyYawOffset: 0
 --- !u!114 &316269139
@@ -2180,6 +2180,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: left
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fcac7b37d9c78514fb7c6d7f3c9c0b3e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1962731375322513451, guid: fcac7b37d9c78514fb7c6d7f3c9c0b3e, type: 3}
       propertyPath: m_CastShadows
       value: 1
@@ -2279,6 +2283,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 636f2e234771a9748a03f200e947e66a, type: 3}
       propertyPath: m_Name
       value: right
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 636f2e234771a9748a03f200e947e66a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3474133382140168192, guid: 636f2e234771a9748a03f200e947e66a, type: 3}
       propertyPath: m_IsActive
@@ -2613,6 +2621,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 636f2e234771a9748a03f200e947e66a, type: 3}
       propertyPath: m_Name
       value: right
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 636f2e234771a9748a03f200e947e66a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3474133382140168192, guid: 636f2e234771a9748a03f200e947e66a, type: 3}
       propertyPath: m_IsActive
