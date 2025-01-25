@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 // Physics hand controller using PID
@@ -45,6 +46,7 @@ public class HandController : MonoBehaviour
         float ksg = kp * g;
         float kdg = (kd + kp * Time.fixedDeltaTime) * g;
         Vector3 force = (target.position -  transform.position) * ksg + (playerRigidBody.linearVelocity - rigidBody.linearVelocity) * kdg;
+        // Debug.Log(force);
         rigidBody.AddForce(force, ForceMode.Acceleration);
     }
 
@@ -75,6 +77,8 @@ public class HandController : MonoBehaviour
         Vector3 displacementFromResting = transform.position - target.position;
         Vector3 force = displacementFromResting * climbForce;
         float drag = GetDrag();
+        
+        Debug.Log(force);
 
         playerRigidBody.AddForce(force, ForceMode.Acceleration);
         playerRigidBody.AddForce(drag * -playerRigidBody.linearVelocity * climbDrag, ForceMode.Acceleration);
@@ -90,5 +94,15 @@ public class HandController : MonoBehaviour
             drag = 0.03f;
         previousPosition = transform.position;
         return drag;
+    }
+    
+    private void OnCollisionEnter(Collision collision)
+    {
+        isColliding = true;
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        isColliding = false;
     }
 }
