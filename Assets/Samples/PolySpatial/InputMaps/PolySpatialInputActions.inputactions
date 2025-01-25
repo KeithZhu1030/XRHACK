@@ -46,7 +46,7 @@
                 {
                     "name": "",
                     "id": "74c3f666-c665-47f5-b043-4050eb5ec865",
-                    "path": "<SpatialPointerDevice>/primarySpatialPointer",
+                    "path": "<SpatialPointerDevice>/spatialPointer0",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -57,7 +57,7 @@
                 {
                     "name": "",
                     "id": "46e2aa62-d6a8-4c60-85ec-aab4c1b87c94",
-                    "path": "<SpatialPointerDevice>/primarySpatialPointer/phase",
+                    "path": "<SpatialPointerDevice>/spatialPointer0/phase",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
