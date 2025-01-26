@@ -12,7 +12,6 @@ namespace PolySpatial.Samples
 
         public enum BubbleSizeEnum
         {
-            ExtraSmall,
             Small,
             Medium,
             Large
@@ -21,10 +20,16 @@ namespace PolySpatial.Samples
         float m_StartTime;
         public Vector3 m_TargetScale;
         Vector3 m_PreviousScale;
-        Vector3 m_ExtraSmallScale = new Vector3(0.1f, 0.1f, 0.1f);
         Vector3 m_SmallScale = new Vector3(0.2f, 0.2f, 0.2f);
         Vector3 m_MediumScale = new Vector3(0.3f, 0.3f, 0.3f);
         Vector3 m_LargeScale = new Vector3(0.4f, 0.4f, 0.4f);
+
+        private BubbleSizeEnum currentScale;
+
+        public BubbleSizeEnum GetScale()
+        {
+            return currentScale;
+        }
 
         void Awake()
         {
@@ -36,7 +41,7 @@ namespace PolySpatial.Samples
         {
             var scalePercent = (Time.time - m_StartTime) * m_ScaleSpeed;
             var scaleDiff = Mathf.Abs(m_TargetScale.x - m_PreviousScale.x);
-            if(scaleDiff == 0)
+            if (scaleDiff == 0)
             {
                 return;
             }
@@ -50,9 +55,6 @@ namespace PolySpatial.Samples
             Vector3 targetScale = Vector3.zero;
             switch (size)
             {
-                case BubbleSizeEnum.ExtraSmall:
-                    targetScale = m_ExtraSmallScale;
-                    break;
                 case BubbleSizeEnum.Small:
                     targetScale = m_SmallScale;
                     break;

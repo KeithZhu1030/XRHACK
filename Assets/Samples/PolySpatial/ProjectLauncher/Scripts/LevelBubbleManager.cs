@@ -25,7 +25,7 @@ namespace PolySpatial.Samples
         [SerializeField]
         TMP_Text m_LevelDescription;
 
-        List<BubbleSize> m_BubbleSizes;
+        List<BubbleSize> m_BubbleSizes = new List<BubbleSize>();
         List<GameObject> m_BubbleObjects;
         List<BubbleCircleNode> m_BubbleCircleNodes;
         float m_StartTime;
@@ -37,6 +37,8 @@ namespace PolySpatial.Samples
 
         void Start()
         {
+            m_BubbleSizes.Clear();
+            m_BubbleSizes.AddRange(GetComponentsInChildren<BubbleSize>());
             m_BubbleSizes = new List<BubbleSize>();
             m_BubbleObjects = new List<GameObject>();
 
@@ -96,24 +98,33 @@ namespace PolySpatial.Samples
             m_PreviousRotation = m_TargetRotation;
             m_TargetRotation += new Vector3(0, direction * m_BubbleLayoutManager.BubbleSpacing, 0);
 
+            Debug.Log($"Before updating index: CurrentIndex = {s_CurrentSelectedIndex}, TargetRotation = {m_TargetRotation}, PreviousRotation = {m_PreviousRotation}");
+
+
             // cycle index around 0 depending on which button was pressed
             if (s_CurrentSelectedIndex == m_BubbleSizes.Count - 1 && !left)
             {
+                Debug.Log($"Transitioning from 6 -> 0");
+
                 s_CurrentSelectedIndex = 0;
             }
             else
             {
+                Debug.Log($"Transitioning from 0 -> 6");
+
                 s_CurrentSelectedIndex -= direction;
                 if (s_CurrentSelectedIndex < 0)
                 {
                     s_CurrentSelectedIndex = m_BubbleSizes.Count - 1;
                 }
 
-                if (s_CurrentSelectedIndex > m_BubbleSizes.Count)
+                if (s_CurrentSelectedIndex >= m_BubbleSizes.Count)
                 {
                     s_CurrentSelectedIndex = 0;
                 }
             }
+
+            Debug.Log($"After updating index: CurrentIndex = {s_CurrentSelectedIndex}, TargetRotation = {m_TargetRotation}, PreviousRotation = {m_PreviousRotation}");
 
             UpdateLevelInfo();
             SetBubbleScale();
@@ -121,40 +132,38 @@ namespace PolySpatial.Samples
 
         void SetBubbleScale()
         {
-            // large
-            var currentSelection = m_BubbleSizes[s_CurrentSelectedIndex];
-            // medium
-            var nextBubble = m_BubbleCircleNodes[s_CurrentSelectedIndex].NextBubble;
-            var previousBubble = m_BubbleCircleNodes[s_CurrentSelectedIndex].PreviousBubble;
-            // small
-            GameObject nextNextBubble = null;
-            GameObject previousPreviousBubble = null;
-            foreach (var bubbleNode in m_BubbleCircleNodes)
+            // Set scale for bubbles
+
+            Debug.Log($"Setting scales: CurrentSelectedIndex = {s_CurrentSelectedIndex}");
+            for (int i = 0; i < m_BubbleSizes.Count; i++)
             {
-                if (bubbleNode.Bubble == nextBubble)
-                {
-                    nextNextBubble = bubbleNode.NextBubble;
-                }
+                Debug.Log($"Bubble {i} current scale = {m_BubbleSizes[i].GetScale()}");
+            }
+            var currentSelection = m_BubbleSizes[s_CurrentSelectedIndex];
+            var nextIndex = (s_CurrentSelectedIndex + 1) % m_BubbleSizes.Count;
+            var previousIndex = (s_CurrentSelectedIndex - 1 + m_BubbleSizes.Count) % m_BubbleSizes.Count;
 
-                if (bubbleNode.Bubble == previousBubble)
-                {
-                    previousPreviousBubble = bubbleNode.PreviousBubble;
-                }
+            Debug.Log($"Setting scales for: CurrentBubble = {s_CurrentSelectedIndex}, NextBubble = {nextIndex}, PreviousBubble = {previousIndex}");
 
-                // all others are set to extra small
-                if (bubbleNode.Bubble != nextBubble || bubbleNode.Bubble != previousBubble || bubbleNode.Bubble != nextNextBubble ||
-                    bubbleNode.Bubble != previousPreviousBubble || bubbleNode.Bubble != currentSelection.gameObject)
+            // Large scale for the current selection
+            currentSelection.SetScale(BubbleSize.BubbleSizeEnum.Large);
+
+            // Medium scale for the next and previous bubbles
+            m_BubbleSizes[nextIndex].SetScale(BubbleSize.BubbleSizeEnum.Medium);
+            m_BubbleSizes[previousIndex].SetScale(BubbleSize.BubbleSizeEnum.Medium);
+
+            // Small scale for all other bubbles
+            for (int i = 0; i < m_BubbleSizes.Count; i++)
+            {
+                if (i != s_CurrentSelectedIndex && i != nextIndex && i != previousIndex)
                 {
-                    bubbleNode.Bubble.GetComponent<BubbleSize>().SetScale(BubbleSize.BubbleSizeEnum.ExtraSmall);
+                    m_BubbleSizes[i].SetScale(BubbleSize.BubbleSizeEnum.Small);
                 }
             }
-
-            // set scale
-            currentSelection.SetScale(BubbleSize.BubbleSizeEnum.Large);
-            nextBubble.GetComponent<BubbleSize>().SetScale(BubbleSize.BubbleSizeEnum.Medium);
-            previousBubble.GetComponent<BubbleSize>().SetScale(BubbleSize.BubbleSizeEnum.Medium);
-            nextNextBubble.GetComponent<BubbleSize>().SetScale(BubbleSize.BubbleSizeEnum.Small);
-            previousPreviousBubble.GetComponent<BubbleSize>().SetScale(BubbleSize.BubbleSizeEnum.Small);
+            for (int i = 0; i < m_BubbleSizes.Count; i++)
+            {
+                Debug.Log($"Bubble {i} new scale = {m_BubbleSizes[i].GetScale()}");
+            }
         }
 
         public void LoadSelectedLevel()
@@ -168,18 +177,8 @@ namespace PolySpatial.Samples
 
             for (int i = 0; i < m_BubbleObjects.Count; i++)
             {
-                var nextIndex = i + 1;
-                var previousIndex = i - 1;
-
-                if (nextIndex > m_BubbleObjects.Count - 1)
-                {
-                    nextIndex = 0;
-                }
-
-                if (previousIndex < 0)
-                {
-                    previousIndex = m_BubbleObjects.Count - 1;
-                }
+                var nextIndex = (i + 1) % m_BubbleObjects.Count;
+                var previousIndex = (i - 1 + m_BubbleObjects.Count) % m_BubbleObjects.Count;
 
                 var nextBubble = m_BubbleObjects[nextIndex];
                 var previousBubble = m_BubbleObjects[previousIndex];
