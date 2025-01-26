@@ -99,6 +99,11 @@ public class HandController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         isColliding = true;
+
+        if (collision.gameObject.CompareTag("Food"))
+        {
+            Destroy(collision.gameObject);
+        }
     }
 
     private void OnCollisionExit(Collision collision)
